@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Feedbacks — Petras</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1>Central de Feedbacks <span class="brand">Petras</span></h1>
+      <p class="subtitle">Colete opiniões, visualize dados e extraia insights rapidamente.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="grid">
+      <!-- Formulário -->
+      <div class="card">
+        <h2>Enviar feedback</h2>
+        <form id="feedback-form" novalidate>
+          <div class="field">
+            <label for="name">Nome *</label>
+            <input id="name" name="name" type="text" placeholder="Seu nome" required />
+            <small class="error" data-error-for="name"></small>
+          </div>
+
+          <div class="field">
+            <label for="rating">Nota *</label>
+            <select id="rating" name="rating" required>
+              <option value="">Selecione</option>
+              <option value="5">5 — Excelente</option>
+              <option value="4">4 — Muito bom</option>
+              <option value="3">3 — Bom</option>
+              <option value="2">2 — Regular</option>
+              <option value="1">1 — Ruim</option>
+            </select>
+            <small class="error" data-error-for="rating"></small>
+          </div>
+
+          <div class="field">
+            <label for="comment">Comentário (opcional)</label>
+            <textarea id="comment" name="comment" rows="4" placeholder="Conte um pouco sobre sua experiência"></textarea>
+          </div>
+
+          <button type="submit" class="btn primary">Enviar</button>
+          <button type="reset" class="btn ghost" id="reset-form">Limpar</button>
+        </form>
+      </div>
+
+      <!-- Dashboard -->
+      <div class="card">
+        <h2>Dashboard</h2>
+        <div class="insights">
+          <div class="metric">
+            <span class="metric-label">Quantidade</span>
+            <span class="metric-value" id="m-count">0</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Média</span>
+            <span class="metric-value" id="m-avg">—</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">% Positivos (≥4)</span>
+            <span class="metric-value" id="m-pos">—</span>
+          </div>
+        </div>
+
+        <div class="filters">
+          <div class="filter-group">
+            <span class="filter-label">Filtrar por nota:</span>
+            <label><input type="checkbox" class="filter-rating" value="5" checked /> 5</label>
+            <label><input type="checkbox" class="filter-rating" value="4" checked /> 4</label>
+            <label><input type="checkbox" class="filter-rating" value="3" checked /> 3</label>
+            <label><input type="checkbox" class="filter-rating" value="2" checked /> 2</label>
+            <label><input type="checkbox" class="filter-rating" value="1" checked /> 1</label>
+            <button id="clear-filters" class="btn tiny">Limpar filtros</button>
+          </div>
+        </div>
+
+        <div class="chart-wrap">
+          <canvas id="ratingsChart" aria-label="Distribuição das notas" role="img"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lista de feedbacks -->
+    <section class="card">
+      <div class="list-header">
+        <h2>Feedbacks recebidos</h2>
+        <div class="list-actions">
+          <input type="search" id="search" placeholder="Buscar por nome ou texto…" />
+          <button id="clear-storage" class="btn danger tiny" title="Apagar tudo">Apagar tudo</button>
+        </div>
+      </div>
+
+      <ul id="feedback-list" class="feedback-list" aria-live="polite"></ul>
+
+      <template id="feedback-item-template">
+        <li class="feedback-item">
+          <div class="item-top">
+            <span class="badge rating-badge"></span>
+            <strong class="name"></strong>
+            <span class="date"></span>
+          </div>
+          <p class="comment"></p>
+        </li>
+      </template>
+
+      <p id="empty-state" class="empty">Nenhum feedback encontrado.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>Feito para estudos — HTML, CSS, JS e Chart.js</small>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
